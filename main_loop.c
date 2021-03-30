@@ -36,14 +36,20 @@ void run_shell(char *batch)
 			printf("dash> ");
 
 		// take input
-		input= take_input();
+		input= take_input(batch, file);
+
+		if (input == NULL)
+		{
+			break;
+		}
 
 		//prase command
 		Command **command = parse_command(input);
 		int list_index;
 		for (list_index = 0; list_index < g_pids; ++list_index)
 		{
-			if (command[list_index] == NULL || (command[list_index])->parsed_command[0] == NULL)
+
+			if (command == NULL || command[list_index] == NULL || (command[list_index])->parsed_command[0] == NULL)
 			{
 				continue;
 			}

@@ -61,10 +61,10 @@ void remove_white_space(char *arr)
 }
 
 
-char *take_input()
+char *take_input(char *batch, FILE *file)
 {
 	char *command;
-	size_t buffer_size = 64;
+	size_t buffer_size = 0;
 	size_t characters;
 
 	command = (char *)malloc(buffer_size * sizeof(char));
@@ -74,12 +74,15 @@ char *take_input()
 		exit(1);
 	}
 
-	characters = getline(&command,&buffer_size,stdin);
+	if(batch != NULL)
+		characters = getline(&command, &buffer_size, file);
+	else
+		characters = getline(&command,&buffer_size,stdin);
 
 	if (characters == -1)
 	{
 		perror("cannot read command\n");
-		exit(1);
+		return NULL;
 	}
 
 	if (command[characters -1] == '\n')
