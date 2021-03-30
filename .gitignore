@@ -1,2 +1,4 @@
 CMakeLists.txt
 compile_commands.json
+*.exe
+
