@@ -12,6 +12,54 @@
 
 int g_pids;
 
+void remove_white_space(char *arr)
+{
+	int n = strlen(arr);
+	for (int i = 0; i < n; i++)
+    {
+    	if(arr[i] == '\t')
+    		arr[i] = ' ';
+    }
+    // space is 1 when a space character is found and
+    // 0 when any non-space character is found
+    int space = 0;
+ 
+    // `k` points to the next free position
+    int k = 0;
+ 
+    // iterate through the characters of the string
+    for (int i = 0; i < n; i++)
+    {
+        // handle leading spaces in the string
+        while (k == 0 && i < n && arr[i] == ' ') {
+            i++;
+        }
+ 
+        // if the current character is a space
+        if (arr[i] == ' ')
+        {
+            // if the flag was 0 earlier, i.e., the first occurrence of a
+            // space after a word
+            if (!space)
+            {
+                // copy current char (whitespace) at the next free index
+                // and set the flag
+                arr[k++] = arr[i];
+                space = 1;
+            }
+        }
+        // if the current character is a punctuation mark
+        else {
+            // copy the current character at the next free index
+            arr[k++] = arr[i];
+            space = 0;
+        }
+    }
+ 
+    // handle trailing spaces in the string
+    arr[k] = '\0';
+}
+
 
 char *take_input()
 {
@@ -38,7 +86,7 @@ char *take_input()
 	{
 		command[characters - 1] = '\0';
 	}
-
+	remove_white_space(command);
 	return command;
 }
 
